@@ -28,6 +28,21 @@ var albumMarconi = {
   ]
 };
 
+var albumBigFish = {
+  title: 'Big Fish',
+  artist: 'Jacques Cousteau',
+  label: 'Aqua-lung',
+  year: '1990',
+  albumArtUrl: 'assets/images/album_covers/12.png',
+  songs: [
+    {title: 'Great White Shark', duration:'1:01'},
+    {title: 'Baleen Whale', duration:'5:01'},
+    {title: 'Orca', duration:'3:21'},
+    {title: 'Tiger Shark', duration:'3:14'},
+    {title: 'Dolphin', duration:'2:15'},
+  ]
+};
+
 var createSongRow = function(songNumber, songName, songLength){
   var template =
     '<tr class="album-view-song-item">'
@@ -55,7 +70,18 @@ var setCurrentAlbum = function(album) {
     albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
   }
 };
+var albumImage = document.getElementsByClassName('album-cover-art')[0];
 
 window.onload = function() {
   setCurrentAlbum(albumPicasso);
+
+  var albums = [albumPicasso, albumMarconi, albumBigFish];
+  var index = 1
+  albumImage.addEventListener("click", function(event){
+    setCurrentAlbum(albums[index]);
+    index++;
+    if( index == albums.length){
+      index = 0;
+    }
+  });
 };
