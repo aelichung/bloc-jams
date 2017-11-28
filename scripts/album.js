@@ -74,9 +74,9 @@ var setCurrentAlbum = function(album) {
 var findParentByClassName = function(element, targetClass) {
     if (element) {
         var currentParent = element.parentElement;
-        while (currentParent.className !== targetClass && currentParent.className !== null) {
+        while ((currentParent.className !== targetClass) && (currentParent.className !== null)) {
             currentParent = currentParent.parentElement;
-        };
+        }
         return currentParent;
     }
 };
@@ -91,13 +91,15 @@ var getSongItem = function(element){
       return element.querySelector('.song-item-number');
     case 'song-item-title':
     case 'song-item-duration':
-      return findParentByClassName(element, 'album-view-song-item')
+      return findParentByClassName(element, 'album-view-song-item').querySelector('.song-item-number');
     case 'song-item-number':
       return element;
     default:
       return;
   }
 };
+
+// var currentlyPlayingSong = null;
 
 var clickHandler = function(targetElement){
   var songItem = getSongItem(targetElement);
@@ -109,8 +111,8 @@ var clickHandler = function(targetElement){
     currentlyPlayingSong = null;
   } else if(currentlyPlayingSong !== songItem.getAttribute('data-song-number')){
     var currentlyPlayingSong = document.querySelector('[data-song-number="' + currentlyPlayingSong + '"]');
-    currentlyPlayingSongElement.innerHTML = currentlyPlayingSongElement.getAttribute('data-song-number');
-    songitem.innerHTML = pauseButtonTemplate;
+    currentlyPlayingSong.Element.innerHTML = currentlyPlayingSong.Element.getAttribute('data-song-number');
+    songItem.innerHTML = pauseButtonTemplate;
     currentlyPlayingSong = songItem.getAttribute('data-song-number');
   }
 };
@@ -121,7 +123,6 @@ var songRows = document.getElementsByClassName('album-view-song-item');
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
 
-var currentlyPlayingSong = null;
 
 window.onload = function() {
   setCurrentAlbum(albumPicasso);
@@ -146,6 +147,7 @@ window.onload = function() {
     });
     songRows[i].addEventListener('click',function(event){
       clickHandler(event.target);
+      console.log('click');
     });
   }
 };
