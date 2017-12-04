@@ -156,7 +156,21 @@ var setVolume = function(volume) {
     currentSoundFile.setVolume(volume);
   }
 };
-
+var mainPlayPause = $('.main-controls .play-pause');
+var togglePlayFromPlayerBar = function() {
+  var $songNumberCell = $(
+    '.song-item-number[data-song-number="' + currentlyPlayingSongNumber + '"]'
+  );
+  if (currentSoundFile.isPaused() && mainPlayPause.html(playerBarPlayButton)) {
+    $songNumberCell.html(pauseButtonTemplate);
+    mainPlayPause.html(playerBarPauseButton);
+    currentSoundFile.play();
+  } else if (currentSoundFile && mainPlayPause.html(playerBarPauseButton)) {
+    $songNumberCell.html(playButtonTemplate);
+    mainPlayPause.html(playerBarPlayButton);
+    currentSoundFile.pause();
+  }
+};
 var updatePlayerBarSong = function() {
   $('.currently-playing .song-name').text(currentSongFromAlbum.title);
   $('.currently-playing .artist-song-mobile').text(
@@ -170,4 +184,5 @@ $(document).ready(function() {
   setCurrentAlbum(albumPicasso);
   $previousButton.click(previousSong);
   $nextButton.click(nextSong);
+  mainPlayPause.click(togglePlayFromPlayerBar);
 });
